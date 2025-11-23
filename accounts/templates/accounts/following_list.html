@@ -1,0 +1,15 @@
+{% extends "../base.html" %}
+{% block title %} Following list{% endblock title %}
+
+{% block content %}
+<h3> You follow them : </h3>
+<ol>
+{% for username in following_list  %}
+<li>
+    {{username.following.user.username}}  
+ </li>
+{% endfor %}
+</ol>
+{% endblock content %}
+
+

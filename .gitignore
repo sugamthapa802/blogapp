@@ -1,2 +1,3 @@
 venv/
 Plans.txt
+db.sqlite3

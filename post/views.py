@@ -11,6 +11,10 @@ class CreatePostView(CreateView):
     template_name='post/create_post.html'
     success_url=reverse_lazy('home')
 
+    def form_valid(self, form):
+        form.instance.author=self.request.user
+        return super().form_valid(form)
+
 class ListPostView(LoginRequiredMixin,ListView):
     model=Post
     template_name='post/list_post.html'

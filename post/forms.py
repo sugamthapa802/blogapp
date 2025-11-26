@@ -6,7 +6,7 @@ from crispy_forms.layout import Layout,Column,Row,Submit
 class PostForm(forms.ModelForm):
     class Meta:
         model=Post
-        fields='__all__'
+        fields=['title','category','description','relevant_pic']
 
     def __init__(self,*args,**kwargs):
             super().__init__(*args, **kwargs)
@@ -14,7 +14,6 @@ class PostForm(forms.ModelForm):
             self.helper.form_method='POST'
             self.helper.layout=Layout(
                 'title',
-                'author',
                 'category',
                 'description',
                 'relevant_pic',

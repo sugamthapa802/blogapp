@@ -5,19 +5,22 @@
   <div class="row">
     {% for profile in registered_users %}
     <div class="col-md-6 mb-4">
-      <!-- 3 per row (12 / 4 = 3) -->
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{ profile.user.username }}</h5>
-          <h6 class="card-subtitle mb-2 text-body-secondary">
-            {{ profile.address }}
-          </h6>
-          <p class="card-text">Some Information.</p>
-          <a href="{{profile.get_absolute_url }}">View Profile</a>
-          
-        </div>
-      </div>
+  <div class="card position-relative"> <!-- relative needed for absolute positioning -->
+    <a href="{% url 'followuser' profile.pk %}" 
+       class="position-absolute top-0 end-0 m-2 btn btn-primary btn-sm">
+      Follow +
+    </a>
+    <div class="card-body">
+      <h5 class="card-title">{{ profile.user.username }}</h5>
+      <h6 class="card-subtitle mb-2 text-body-secondary">
+        {{ profile.address }}
+      </h6>
+      <p class="card-text">Some Information.</p>
+      <a href="{{ profile.get_absolute_url }}">View Profile</a>
     </div>
+  </div>
+</div>
+
     {% endfor %}
   </div>
 </div>

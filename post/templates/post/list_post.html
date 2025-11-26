@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>Successfully hit !!!</h1>
+    {% for post in posts  %}
+    <h3>here are your posts :</h3>
+        {{post.title}}
+    {% empty %}
+        <h3>You havenot posted anything yet, please post some :))</h3>
+    
+    {% endfor %}
+</body>
+</html>

@@ -1,10 +1,31 @@
 {% extends "../base.html" %}
-{% block title %} login{% endblock title %} 
+{% load crispy_forms_tags %}
+
+{% block title %}Login{% endblock title %}
+
 {% block content %}
-<form action="{% url 'login' %}" method='POST'>
-    {% csrf_token %}
-    {{form}}
-    <button type="submit">Login </button>
-</form>
-{% endblock content %}
+ <div class="container mt-5">
+  <div class="card shadow-lg p-4 mx-auto" style="max-width: 450px">
+    <h3 class="text-center mb-4">Login</h3>
+    <form method="POST" action="{% url 'login_view' %}">
+      {% csrf_token %}
+      {% crispy form %}
+    </form>
+  </div>
+</div>
+{% endblock content %}  
+
+
+ {% comment %} {% block content %}
+
+<form method="POST" action="{% url 'login_view' %}">
+      {% csrf_token %}
+      {{form}}
+      <button type="submit" class="btn btn-primary btn-lg w-100 mt-3">Login</button>
+    </form>
+
+{% endblock content %}   {% endcomment %}
+
+
+
 

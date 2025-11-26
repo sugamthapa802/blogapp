@@ -2,7 +2,7 @@ from django.shortcuts import render,get_object_or_404,HttpResponse,redirect,Http
 from .models import CustomUser,Profile,Follow
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from django.http import Http404
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm,CrispyAuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
@@ -12,6 +12,18 @@ from django.contrib.auth import login,authenticate
 
 def home(request):
     return render(request,'accounts/home.html')
+
+
+def login_view(request):
+    if request.method=='POST':
+        form=CrispyAuthenticationForm(request,data=request.POST)
+        if form.is_valid():
+            user=form.get_user()
+            login(request,user)
+            return redirect('home')
+    else:
+      form=CrispyAuthenticationForm()
+    return render(request,'registration/login.html',{'form':form})
 
 class ProfileList(ListView):
     model = Profile
@@ -43,7 +55,7 @@ class SignUpView(CreateView):
     def form_valid(self, form):
         self.object = form.save()  # MUST assign to self.object
         login(self.request, self.object)
-        return super().form_valid(form)  # now get_success_url() works
+        return redirect(self.get_success_url()) # now get_success_url() works
 
 
 #Follow functionality related_works after this :
@@ -55,6 +67,17 @@ class FollowUserView(LoginRequiredMixin,View):
         service=FollowService(current_user=request.user)
         message=service.follow_service(username_to_follow)
         return redirect(self.success_url)
+
+def followuser(request,pk):
+    user_to_follow=get_object_or_404(Profile,id=pk)
+    following_user_profile_id=request.user.profile
+    if user_to_follow==following_user_profile_id:
+        return HttpResponse('you cannot follow yourself')
+    if Follow.objects.filter(follower=following_user_profile_id,following=user_to_follow).exists():
+        return HttpResponse('already exists')
+    Follow.objects.create(follower=following_user_profile_id,following=user_to_follow)
+    return render(request,'accounts/follow.html')
+    
 
 """
 Class UnfollowUserView(loginrequiredmixin,UpdateView):

@@ -8,12 +8,16 @@
 <body>
     
     <h1>Successfully hit !!!</h1>
-    {% for post in posts  %}
     <h3>here are your posts :</h3>
-        {{post.title}}
-    {% empty %}
-        <h3>You havenot posted anything yet, please post some :))</h3>
-    
-    {% endfor %}
+    {% for post in posts %}
+    <h3>{{ post.title }}</h3>
+
+    {% if post.relevant_pic %}
+        <img src="{{ post.relevant_pic.url }}" alt="{{ post.title }}" style="max-width:300px;">
+    {% else %}
+        <p>No image uploaded for this post.</p>
+    {% endif %}
+{% endfor %}
+
 </body>
 </html>

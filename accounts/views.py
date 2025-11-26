@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from .services.follow_service import FollowService
 from django.urls import reverse_lazy
-from django.contrib.auth import login,authenticate
+from django.contrib.auth import login,authenticate,logout
 
 def home(request):
     return render(request,'accounts/home.html')
@@ -24,6 +24,11 @@ def login_view(request):
     else:
       form=CrispyAuthenticationForm()
     return render(request,'registration/login.html',{'form':form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
+
 
 class ProfileList(ListView):
     model = Profile

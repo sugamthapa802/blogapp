@@ -25,7 +25,7 @@ class Profile(models.Model):
     date_of_birth=models.DateField(null=True,blank=True,validators=[validate_dob])
     address=models.CharField(null=True,blank=True,max_length=255)
     bio=models.CharField(null=True,blank=True,max_length=500)
-    # profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
     
     def __str__(self):
         return self.user.email

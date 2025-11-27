@@ -2,14 +2,48 @@
 {% block title %} Following list{% endblock title %}
 
 {% block content %}
-<h3> You follow them : </h3>
-<ol>
-{% for username in following_list  %}
-<li>
-    {{username.following.user.username}}  
- </li>
-{% endfor %}
-</ol>
+<div class="container my-5">
+  <h2 class="mb-4 text-center">My Friends</h2>
+  <div class="row g-4">
+    {% for friend in following_list %}
+      <div class="col-md-4">
+        <div class="card friend-card">
+          <img src="{% if friend.following.profile_picture %}{{ friend.following.profile_picture.url }}{% else %}/static/default_avatar.png{% endif %}" 
+               class="card-img-top" alt="{{ friend.following.user.username }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ friend.following.user.username }}</h5>
+            <p class="card-text">{{ friend.following.bio }}</p>
+            <p class="card-text">{{ friend.following.address }}</p>
+            <a href="{{ friend.following.get_absolute_url }}" class="btn btn-primary btn-sm">View Profile</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-center">You have no friends added yet.</p>
+    {% endfor %}
+  </div>
+</div>
+
+
+<style>
+.friend-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+.friend-card {
+  border-radius: 0.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.friend-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+</style>
+
+
 {% endblock content %}
 
 

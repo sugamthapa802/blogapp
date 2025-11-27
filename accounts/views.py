@@ -110,7 +110,7 @@ class ListExploreView(LoginRequiredMixin,ListView):
     model=Follow
     template_name='accounts/explore.html'
     context_object_name='registered_users'
-    paginate_by=6
+    paginate_by=9
     def get_queryset(self):
         user_profile=get_object_or_404(Profile,user=self.request.user)
         queryset = Profile.objects.exclude(id=user_profile.id)

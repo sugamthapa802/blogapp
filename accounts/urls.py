@@ -13,5 +13,5 @@ urlpatterns = [
     path('followinglist/',ListFollowing.as_view(),name='followinglist'),
     # path('unfollow/<int:pk>/',UnfollowUserView.as_view(),name='unfollow')
     path('explore/',ListExploreView.as_view(),name='explore'),
-    path('followuser/<int:pk>/',followuser,name='followuser')
+    path('followuser/<int:pk>/',followuser,name='followuser'),
 ]

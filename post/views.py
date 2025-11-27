@@ -3,7 +3,7 @@ from .models import Post,Interactions,Like,Comment
 from django.views.generic import CreateView
 from .forms import PostForm
 from django.urls import reverse_lazy
-from django.views.generic import ListView
+from django.views.generic import ListView,DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 class CreatePostView(CreateView):
@@ -15,10 +15,15 @@ class CreatePostView(CreateView):
         form.instance.author=self.request.user
         return super().form_valid(form)
 
-class ListPostView(LoginRequiredMixin,ListView):
+class ListOwnPostView(LoginRequiredMixin,ListView):
     model=Post
-    template_name='post/list_post.html'
+    template_name='post/list_own_post.html' 
     context_object_name='posts'
     def get_queryset(self):
         return Post.objects.filter(author=self.request.user)
+
+class PostDetailView(DetailView):
+    model=Post
+    template_name='post/post_detail.html'
+    context_object_name='post'
     

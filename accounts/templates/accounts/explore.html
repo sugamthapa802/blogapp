@@ -4,7 +4,7 @@
 <div class="container">
   <div class="row">
     {% for profile in registered_users %}
-    <div class="col-md-6 mb-4">
+    <div class="col-md-4 mb-4">
   <div class="card position-relative"> <!-- relative needed for absolute positioning -->
     <a href="{% url 'followuser' profile.pk %}" 
        class="position-absolute top-0 end-0 m-2 btn btn-primary btn-sm">

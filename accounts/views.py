@@ -9,9 +9,11 @@ from django.views import View
 from .services.follow_service import FollowService
 from django.urls import reverse_lazy
 from django.contrib.auth import login,authenticate,logout
+from post.models import Post
 
 def home(request):
-    return render(request,'accounts/home.html')
+    all_posts=Post.objects.all()
+    return render(request,'accounts/home.html',{'all_posts':all_posts})
 
 
 def login_view(request):
@@ -72,6 +74,7 @@ class FollowUserView(LoginRequiredMixin,View):
         service=FollowService(current_user=request.user)
         message=service.follow_service(username_to_follow)
         return redirect(self.success_url)
+   
 
 def followuser(request,pk):
     user_to_follow=get_object_or_404(Profile,id=pk)

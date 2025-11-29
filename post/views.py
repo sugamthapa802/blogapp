@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class CreatePostView(CreateView):
     form_class=PostForm
     template_name='post/create_post.html'
-    success_url=reverse_lazy('home')
+    # success_url=reverse_lazy('home')
 
     def form_valid(self, form):
         form.instance.author=self.request.user
@@ -26,4 +26,4 @@ class PostDetailView(DetailView):
     model=Post
     template_name='post/post_detail.html'
     context_object_name='post'
-    
+

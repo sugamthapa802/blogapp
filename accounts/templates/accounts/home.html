@@ -2,6 +2,24 @@
 {% block title %}Home {% endblock title %}
 <body>
     {% block content %}
+    <style>
+.post-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+.post-card {
+  border-radius: 0.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+</style>
+
         <h3>Welcome To The Home Page. </h3>
     {% if request.user.is_authenticated %}
         <p>Namaste, {{request.user.username}}</p>
@@ -14,6 +32,46 @@
     <input type="text" name="username" placeholder="Enter username">
     <button type="submit">Follow</button>
 </form>
+
+
+<div class="container py-4">
+
+    <h2 class="mb-4 text-center fw-bold">All Posts</h2>
+
+    <div class="row g-4">
+        {% for post in all_posts %}
+        <div class="col-md-6 col-lg-6">  <!-- 2 cards per row -->
+            <div class="card shadow-sm h-100">
+
+                {% if post.relevant_pic %}
+                <img src="{{ post.relevant_pic.url }}" class="card-img-top" alt="{{ post.title }}" style="height: 250px; object-fit: cover;">
+                {% else %}
+                        <span class="text-muted fw-semibold">No Photo</span>
+                {% endif %}
+
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">{{ post.title }}</h5>
+
+                    <p class="text-muted small mb-2">
+                        Category: <span class="fw-semibold">{{ post.category }}</span><br>
+                        Author: <span class="fw-semibold">{{ post.author.username }}</span>
+                    </p>
+
+                    <p class="card-text" style="min-height: 60px;">
+                        {{ post.description|truncatechars:120 }}
+                    </p>
+
+                    <a href="#" class="btn btn-primary sm">Read More</a>
+                </div>
+
+            </div>
+        </div>
+        {% empty %}
+        <p>No posts found.</p>
+        {% endfor %}
+    </div>
+
+</div>
     {% endblock content %}
 
 </body>
